@@ -47,6 +47,30 @@ Voice Enhancer Bot is a Telegram bot that processes audio files to enhance their
     docker run -d --name voice-enhancer-bot -p 5000:5000 voice-enhancer-bot
     ```
 
+## Running with Docker Compose
+
+1. Create a `docker-compose.yml` file:
+    ```yaml
+    version: '3.8'
+
+    services:
+      voiceenhancer:
+        build: .
+        container_name: voiceenhancer
+        ports:
+          - "8000:8000"  # For health check
+        environment:
+          - TOKEN=${TOKEN}
+          - WHITELIST=${WHITELIST}
+        volumes:
+          - .:/app
+    ```
+
+2. Run the Docker Compose:
+    ```sh
+    docker-compose up -d
+    ```
+
 ## Usage
 
 1. Start a chat with your bot on Telegram.
@@ -54,10 +78,27 @@ Voice Enhancer Bot is a Telegram bot that processes audio files to enhance their
 3. Send an audio file or voice message to the bot.
 4. The bot will process the audio and send back the enhanced version.
 
+## Output Files
+
+- `files/audio.m4a`: The original audio file received from the user.
+- `files/audio_enhanced.wav`: The enhanced audio file processed by the bot.
+
+## Health Check System
+
+A health check system is in place using Flask. The health check endpoint can be accessed at `/health` on port `8000`.
+
+## Video Demo
+
+Check out the video demo of the Voice Enhancer Bot in action:
+
+[![Voice Enhancer Bot Demo](https://img.youtube.com/vi/your-video-id/0.jpg)](https://www.youtube.com/watch?v=your-video-id)
+
 ## Project Structure
 
 - `main.py`: Main application code for the bot.
 - `Dockerfile`: Docker configuration for the bot.
+- `Dockerfile.koyeb`: Docker configuration for Koyeb deployment.
+- `docker-compose.yml`: Docker Compose configuration.
 - `config.py`: Configuration file for the bot token and whitelist.
 - `requirements.txt`: Python dependencies.
 

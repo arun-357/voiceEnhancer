@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  voiceenhancer:
+    build: .
+    container_name: voiceenhancer
+    ports:
+      - "5000:5000"
+    environment:
+      - TOKEN=${TOKEN}
+      - WHITELIST=${WHITELIST}
+    volumes:
+      - .:/app

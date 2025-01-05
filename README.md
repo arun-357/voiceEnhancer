@@ -90,7 +90,8 @@ A health check system is in place using Flask. The health check endpoint can be 
 ## Video Demo
 
 Check out the video demo of the Voice Enhancer Bot in action:
-[Click here to watch the video](./Output/VoiceEnhancerDemo.mp4)
+
+https://github.com/user-attachments/assets/be379474-c89d-441b-9b04-01b97ecaec98
 
 ## Project Structure
 

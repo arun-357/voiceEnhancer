@@ -56,10 +56,10 @@ class VoiceEnhancer:
           
           # convert audio 
           audio = AudioSegment.from_file(file_name, format="m4a")        
-          audio.export('files/new.wav', format="wav")
+          audio.export('Output/new.wav', format="wav")
           
           # Process Audio
-          with AudioFile('files/new.wav') as file:
+          with AudioFile('Output/new.wav') as file:
                audio = file.read(file.frames)
                sample_rate = file.samplerate
           board = Pedalboard([
@@ -69,20 +69,20 @@ class VoiceEnhancer:
                Gain(gain_db=4),
           ])
           processed_audio = board(audio, sample_rate)
-          with AudioFile('files/enhanced.wav', 'w', sample_rate, processed_audio.shape[0]) as f:
+          with AudioFile('Output/audio_enhanced.wav', 'w', sample_rate, processed_audio.shape[0]) as f:
                f.write(processed_audio)
                
           # send the enhanced audio file
           chat_id = update.effective_chat.id
-          enhanced_file = open('files/enhanced.wav', 'rb')
+          enhanced_file = open('Output/audio_enhanced.wav', 'rb')
           await context.bot.send_audio(chat_id, enhanced_file)
           enhanced_file.close()
           del enhanced_file  
           
           # Delete the files created
-          os.remove('files/audio.m4a')
-          os.remove('files/new.wav')
-          os.remove('files/enhanced.wav')
+          os.remove('Output/audio.m4a')
+          os.remove('Output/new.wav')
+          os.remove('Output/audio_enhanced.wav')
      
      def run(self):
           print('---- Bot is running ----') 

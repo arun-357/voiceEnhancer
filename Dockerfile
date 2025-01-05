@@ -5,7 +5,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Install system dependencies required for audio processing
-RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y ffmpeg git && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file into the container
 COPY requirements.txt /app/requirements.txt
@@ -16,8 +16,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code into the container
 COPY . /app
 
-# Expose the port that the application will use
-EXPOSE 5000
+# Expose the port for health check
+EXPOSE 8000
 
 # Run the bot application
 CMD ["python", "main.py"]

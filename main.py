@@ -1,4 +1,8 @@
 import os
+
+from flask import Flask
+from threading import Thread
+
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, filters, AIORateLimiter, ContextTypes, MessageHandler
 
@@ -7,6 +11,16 @@ from pedalboard.io import AudioFile
 from pydub import AudioSegment
 
 from config import TOKEN, WHITELIST
+
+# Flask app for health check
+health_app = Flask(__name__)
+
+@health_app.route('/health', methods=['GET'])
+def health_check():
+    return "OK", 200
+
+def run_health_check_server():
+    health_app.run(host="0.0.0.0", port=8000)
 
 class VoiceEnhancer:
      def __init__(self):
@@ -72,6 +86,7 @@ class VoiceEnhancer:
      
      def run(self):
           print('---- Bot is running ----') 
+          Thread(target=run_health_check_server).start()
           self.app.run_polling(poll_interval=5)
                
 if __name__ == "__main__":
